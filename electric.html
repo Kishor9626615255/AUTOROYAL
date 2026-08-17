@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — Electric Era</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#014421;--secondary:#002910;--accent:#E8C84A;--bg:#050F08;--white:#F0FFF4;--gray:#4A7A5A;--card:#061408;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(5,15,8,.97);border-bottom:1px solid var(--accent);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--accent);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+    .nav-links a:hover{color:var(--accent);}.nav-links a:hover::after{width:100%;}
+    /* HERO */]
+    .ev-hero{min-height:70vh;display:flex;align-items:center;position:relative;overflow:hidden;background:url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1600&q=80') center/cover;}
+    .ev-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(1,68,33,.92),rgba(5,15,8,.85));}
+    .ev-hero-inner{position:relative;z-index:2;padding:4rem 3rem;max-width:700px;animation:fadeUp .9s ease both;}
+    .ev-hero-inner .eyebrow{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:.8rem;}
+    .ev-hero-inner h1{font-family:'Cinzel',serif;font-size:3.8rem;font-weight:900;line-height:1.1;letter-spacing:3px;}
+    .ev-hero-inner h1 em{color:var(--accent);font-style:normal;}
+    .ev-hero-inner p{font-size:1.2rem;color:rgba(240,255,244,.7);margin:1rem 0 2rem;font-style:italic;line-height:1.6;}
+    .btn-g{background:var(--accent);color:var(--bg);padding:.8rem 2.5rem;border-radius:2px;font-family:'Cinzel',serif;font-weight:700;font-size:.85rem;letter-spacing:2px;text-decoration:none;transition:all .3s;}
+    .btn-g:hover{background:var(--white);transform:translateY(-3px);}
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));background:var(--primary);border-top:2px solid var(--accent);border-bottom:2px solid var(--accent);}
+    .stat{padding:2rem;text-align:center;border-right:1px solid rgba(232,200,74,.2);}
+    .stat:last-child{border-right:none;}
+    .stat-num{font-family:'Cinzel',serif;font-size:2.5rem;color:var(--accent);font-weight:700;}
+    .stat-label{font-size:.85rem;color:rgba(240,255,244,.6);font-style:italic;margin-top:.3rem;}
+    /* SECTION */
+    .section{max-width:1200px;margin:0 auto;padding:4rem 2rem 5rem;}
+    .s-label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;}
+    .s-title{font-family:'Cinzel',serif;font-size:2.3rem;margin:.3rem 0 .6rem;}
+    .s-title em{color:var(--accent);font-style:normal;}
+    .gold-bar{width:55px;height:2px;background:var(--accent);margin:0 0 2.5rem;}
+    /* CARDS */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem;}
+    .card{background:var(--card);border:1px solid rgba(232,200,74,.12);border-radius:4px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .3s;position:relative;}
+    .card:hover{transform:translateY(-9px);box-shadow:0 22px 50px rgba(1,68,33,.4),0 0 0 1px var(--accent);border-color:var(--accent);}
+    .card::after{content:'';position:absolute;left:0;top:0;width:3px;height:0;background:linear-gradient(180deg,var(--accent),var(--primary));transition:height .4s;z-index:3;}
+    .card:hover::after{height:100%;}
+    .card img{width:100%;height:200px;object-fit:cover;transition:transform .5s,filter .4s;}
+    .card:hover img{transform:scale(1.08);filter:brightness(1.1) saturate(1.2);}
+    .card-body{padding:1.3rem;}
+    .range-badge{display:inline-block;background:rgba(232,200,74,.15);border:1px solid var(--accent);color:var(--accent);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1.5px;padding:.2rem .6rem;border-radius:2px;margin-bottom:.6rem;}
+    .card-body h2{font-family:'Cinzel',serif;color:var(--accent);font-size:1.1rem;letter-spacing:1px;margin-bottom:.4rem;}
+    .card-body p{color:rgba(240,255,244,.7);font-size:1rem;line-height:1.5;font-style:italic;}
+    /* COMPARISON TABLE */
+    .table-wrap{overflow-x:auto;margin-top:2rem;}
+    table{width:100%;border-collapse:collapse;font-size:1rem;}
+    thead tr{background:var(--primary);border-bottom:2px solid var(--accent);}
+    th{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:2px;color:var(--accent);padding:1rem 1.2rem;text-align:left;}
+    tbody tr{border-bottom:1px solid rgba(232,200,74,.1);transition:background .2s;}
+    tbody tr:hover{background:rgba(232,200,74,.05);}
+    td{padding:.9rem 1.2rem;color:rgba(240,255,244,.75);font-style:italic;}
+    td:first-child{font-family:'Cinzel',serif;color:var(--white);font-style:normal;font-size:.9rem;}
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--accent);padding:2.5rem 3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--accent);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--accent);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--accent);color:var(--bg);border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.ev-hero-inner{padding:3rem 1.5rem;}.ev-hero-inner h1{font-size:2.4rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="ev-hero">
+  <div class="ev-hero-inner">
+    <div class="eyebrow">⚡ The Electric Kingdom</div>
+    <h1>The <em>Silent</em><br>Revolution</h1>
+    <p>Power redefined. Emissions abolished. The future of the royal road is electric, clean, and utterly relentless.</p>
+    <a href="#ev-cars" class="btn-g">Explore EVs</a>
+  </div>
+</div>
+<div class="stats">
+  <div class="stat"><div class="stat-num">400+</div><div class="stat-label">Miles range on single charge</div></div>
+  <div class="stat"><div class="stat-num">0%</div><div class="stat-label">Direct emissions</div></div>
+  <div class="stat"><div class="stat-num">2s</div><div class="stat-label">0–60 mph in top EVs</div></div>
+  <div class="stat"><div class="stat-num">40M+</div><div class="stat-label">EVs on roads globally</div></div>
+</div>
+<div class="section" id="ev-cars">
+  <div class="s-label">— The Fleet —</div>
+  <div class="s-title">Electric <em>Champions</em></div>
+  <div class="gold-bar"></div>
+  <div class="grid">
+    <div class="card"><img src="https://wallpapercat.com/w/full/7/c/2/9142-3840x2160-desktop-4k-tesla-model-s-wallpaper.jpg" alt="Tesla"><div class="card-body"><span class="range-badge">652 KM RANGE</span><h2>Tesla Model S Plaid</h2><p>The pinnacle of EV performance — 1,020 hp, tri-motor AWD, and a cabin from the future.</p></div></div>
+    <div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsWNCG6QGhd3G9DBW0aZMXSsrnMnXk3KtVbQ&s" alt="BMW iX"><div class="card-body"><span class="range-badge">630 KM RANGE</span><h2>BMW iX M60</h2><p>Bavarian engineering meets electric ambition. 619 hp wrapped in sustainable luxury.</p></div></div>
+    <div class="card"><img src="https://www.hdcarwallpapers.com/walls/2025_rivian_r1t_california_dune-HD.jpg" alt="Rivian"><div class="card-body"><span class="range-badge">560 KM RANGE</span><h2>Rivian R1T</h2><p>The electric pickup truck that conquered the wilderness without burning a drop of fuel.</p></div></div>
+    <div class="card"><img src="https://i.pinimg.com/736x/75/3b/4a/753b4afb4e6e4e6b48649c2f4da9dd88.jpg" alt="Porsche Taycan"><div class="card-body"><span class="range-badge">503 KM RANGE</span><h2>Porsche Taycan Turbo S</h2><p>Stuttgart's electric masterpiece — 761 hp of Porsche DNA fully electrified.</p></div></div>
+    <div class="card"><img src="https://4kwallpapers.com/images/wallpapers/audi-rs-e-tron-gt-2021-5k-3840x2160-4507.jpg" alt="Audi e-tron"><div class="card-body"><span class="range-badge">484 KM RANGE</span><h2>Audi e-tron GT</h2><p>The grand tourer of the electric age — quattro AWD, sculpted lines, zero compromise.</p></div></div>
+    <div class="card"><img src="https://c4.wallpaperflare.com/wallpaper/473/841/241/electric-cars-lucid-air-5k-wallpaper-preview.jpg" alt="Lucid Air"><div class="card-body"><span class="range-badge">836 KM RANGE</span><h2>Lucid Air Dream</h2><p>The world's longest range EV — 1,111 hp and the most aerodynamic production car ever made.</p></div></div>
+  </div>
+</div>
+<div class="section" style="padding-top:0">
+  <div class="s-label">— At a Glance —</div>
+  <div class="s-title">EV <em>Specifications</em></div>
+  <div class="gold-bar"></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Model</th><th>Range</th><th>0–100 km/h</th><th>Power</th><th>Price (est.)</th></tr></thead>
+      <tbody>
+        <tr><td>Tesla Model S Plaid</td><td>652 km</td><td>2.1s</td><td>1,020 hp</td><td>₹1.5 Cr+</td></tr>
+        <tr><td>BMW iX M60</td><td>630 km</td><td>3.8s</td><td>619 hp</td><td>₹1.39 Cr+</td></tr>
+        <tr><td>Porsche Taycan Turbo S</td><td>503 km</td><td>2.8s</td><td>761 hp</td><td>₹2.5 Cr+</td></tr>
+        <tr><td>Audi e-tron GT</td><td>484 km</td><td>3.3s</td><td>590 hp</td><td>₹1.7 Cr+</td></tr>
+        <tr><td>Lucid Air Dream</td><td>836 km</td><td>2.5s</td><td>1,111 hp</td><td>₹2.8 Cr+</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('st').classList.toggle('show',window.scrollY>300));
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)';obs.unobserve(x.target);}});},{threshold:.1});
+document.querySelectorAll('.card').forEach(c=>{c.style.opacity='0';c.style.transform='translateY(30px)';c.style.transition='opacity .6s,transform .6s,box-shadow .35s,border-color .3s';obs.observe(c);});
+</script>
+</body>
+</html>

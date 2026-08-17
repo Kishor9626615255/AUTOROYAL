@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — Brands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#0F2C6F;--secondary:#091A40;--accent:#C9A84C;--bg:#060C1A;--white:#EEF4FF;--gray:#5A6E8C;--card:#0a1528;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(6,12,26,.97);border-bottom:1px solid var(--accent);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--accent);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+    .nav-links a:hover{color:var(--accent);}.nav-links a:hover::after{width:100%;}
+    .page-hero{background:linear-gradient(135deg,var(--primary),var(--secondary));border-bottom:2px solid var(--accent);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'⚓';position:absolute;font-size:18rem;color:rgba(201,168,76,.04);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+    .page-hero h1{font-family:'Cinzel',serif;font-size:3.5rem;font-weight:900;letter-spacing:5px;animation:fadeUp .8s ease both;}
+    .page-hero h1 em{color:var(--accent);font-style:normal;}
+    .page-hero p{font-style:italic;color:rgba(238,244,255,.6);margin-top:.8rem;font-size:1.15rem;animation:fadeUp .8s .2s ease both;}
+    .gold-bar{width:55px;height:2px;background:var(--accent);margin:.8rem auto 0;}
+    /* BRANDS GRID - logo style */
+    .container{max-width:1200px;margin:0 auto;padding:4rem 2rem 5rem;}
+    .brands-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.8rem;}
+    .brand-card{background:var(--card);border:1px solid rgba(201,168,76,.12);border-radius:4px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .3s;cursor:pointer;position:relative;}
+    .brand-card:hover{transform:translateY(-9px) scale(1.02);box-shadow:0 22px 50px rgba(15,44,111,.5),0 0 0 1px var(--accent);border-color:var(--accent);}
+    .brand-card::after{content:'';position:absolute;left:0;top:0;width:3px;height:0;background:linear-gradient(180deg,var(--accent),var(--primary));transition:height .4s;z-index:3;}
+    .brand-card:hover::after{height:100%;}
+    .brand-img-wrap{height:190px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);overflow:hidden;border-bottom:1px solid rgba(201,168,76,.1);}
+    .brand-img-wrap img{max-height:140px;max-width:85%;object-fit:contain;filter:grayscale(.3);transition:filter .4s,transform .5s;}
+    .brand-card:hover .brand-img-wrap img{filter:grayscale(0);transform:scale(1.08);}
+    .brand-body{padding:1.3rem;}
+    .brand-body h2{font-family:'Cinzel',serif;color:var(--accent);font-size:1.1rem;letter-spacing:1px;margin-bottom:.4rem;}
+    .brand-body p{color:rgba(238,244,255,.65);font-style:italic;font-size:1rem;}
+    .brand-tag{display:inline-block;margin-top:.7rem;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;padding:.25rem .7rem;border:1px solid var(--accent);color:var(--accent);border-radius:2px;}
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--accent);padding:2.5rem 3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--accent);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--accent);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--accent);color:var(--bg);border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.page-hero h1{font-size:2.2rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <h1>Great <em>Brands</em></h1>
+  <p>The legendary houses that shaped the royal court of motoring.</p>
+  <div class="gold-bar"></div>
+</div>
+<div class="container">
+  <div class="brands-grid" id="brands-list"></div>
+</div>
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const brands=[
+  {name:'Rolls Royce',img:'https://static.vecteezy.com/system/resources/previews/020/499/840/non_2x/rolls-royce-brand-logo-car-symbol-with-name-black-design-british-automobile-illustration-free-vector.jpg',desc:'"Inspiring Greatness."',tag:'British Luxury'},
+  {name:'Bentley',img:'https://www.supercars.net/blog/wp-content/uploads/2019/12/Bentley-Logo.png',desc:'"Times Change, Quality Is Constant."',tag:'British Luxury'},
+  {name:'Volvo',img:'https://cdn.wallpapersafari.com/3/4/ml46LV.jpg',desc:'"Volvo for life."',tag:'Swedish Safety'},
+  {name:'Jaguar',img:'https://cdn.wallpapersafari.com/26/16/lK9Udt.jpg',desc:'"The Art of Performance."',tag:'British Performance'},
+  {name:'Lamborghini',img:'https://www.lambocars.com/wp-content/uploads/2024/08/ritle-image.jpg',desc:'"Driving Humans Beyond."',tag:'Italian Supercar'},
+  {name:'Ferrari',img:'https://static.wixstatic.com/media/21db20_dea2307cd60a44a6a5f088230bfa6d69~mv2.jpg/v1/fill/w_1000,h_562,al_c,q_85/21db20_dea2307cd60a44a6a5f088230bfa6d69~mv2.jpg',desc:'"We are the Competition."',tag:'Italian Supercar'},
+  {name:'Bugatti',img:'https://mycarheaven.com/wp-content/smush-webp/2023/02/Bugatti-Logo-on-a-Grill-1200x710.jpg.webp',desc:'"Create the Incomparable."',tag:'French Hypercar'},
+  {name:'Nissan',img:'https://wallpapers.com/images/hd/nissan-logo-in-black-q52gnqlt3epskvu6.jpg',desc:'"Innovation that Excites."',tag:'Japanese Innovation'},
+  {name:'BMW',img:'https://wallpapers.com/images/hd/b-m-w-logo-black-background-bbb7zt2pmh8vxvb5.jpg',desc:'"The ultimate Driving Machine."',tag:'German Beast'},
+  {name:'Audi',img:'https://images6.alphacoders.com/771/771189.jpg',desc:'""Advancement through Technology""',tag:'German Machine'},
+  {name:'Mercedes-Benz',img:'https://thumbs.dreamstime.com/b/web-136350849.jpg',desc:'"The Best or Nothing"',tag:'German Luxary'},
+  {name:'Aston Martin',img:'https://static.vecteezy.com/system/resources/previews/020/500/427/non_2x/aston-martin-brand-logo-symbol-black-design-british-cars-automobile-illustration-free-vector.jpg',desc:'"Intensity. Driven."',tag:'British performance'},
+
+];
+const container=document.getElementById('brands-list');
+brands.forEach(b=>{
+  const d=document.createElement('div');
+  d.className='brand-card';
+  d.innerHTML=`<div class="brand-img-wrap"><img src="${b.img}" alt="${b.name}"></div><div class="brand-body"><h2>${b.name}</h2><p>${b.desc}</p><span class="brand-tag">${b.tag}</span></div>`;
+  container.appendChild(d);
+});
+window.addEventListener('scroll',()=>document.getElementById('st').classList.toggle('show',window.scrollY>300));
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)';obs.unobserve(x.target);}});},{threshold:.1});
+document.querySelectorAll('.brand-card').forEach(c=>{c.style.opacity='0';c.style.transform='translateY(30px)';c.style.transition='opacity .6s,transform .6s,box-shadow .35s,border-color .3s';obs.observe(c);});
+</script>
+</body>
+</html>

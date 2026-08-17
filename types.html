@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — Car Types</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#4B0082;--secondary:#1A0033;--accent:#FFD700;--bg:#080010;--white:#FFF9F0;--gray:#9B89A0;--card:#120020;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(8,0,16,.97);border-bottom:1px solid var(--accent);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--accent);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+    .nav-links a:hover{color:var(--accent);}
+    .nav-links a:hover::after{width:100%;}
+    /* PAGE HERO */
+    .page-hero{background:linear-gradient(135deg,var(--primary),var(--secondary));border-bottom:2px solid var(--accent);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'♛';position:absolute;font-size:20rem;color:rgba(255,215,0,.03);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+    .page-hero h1{font-family:'Cinzel',serif;font-size:3.5rem;font-weight:900;letter-spacing:5px;color:var(--white);animation:fadeUp .8s ease both;}
+    .page-hero h1 em{color:var(--accent);font-style:normal;}
+    .page-hero p{font-style:italic;color:rgba(255,249,240,.65);margin-top:.8rem;font-size:1.15rem;animation:fadeUp .8s ease .2s both;}
+    .gold-bar{width:55px;height:2px;background:var(--accent);margin:.8rem auto 0;}
+    /* FILTER */
+    .filter-bar{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;padding:2.5rem 2rem;}
+    .filter-btn{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;padding:.55rem 1.5rem;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;border-radius:2px;transition:all .3s;}
+    .filter-btn.active,.filter-btn:hover{background:var(--accent);color:var(--bg);}
+    /* GRID */
+    .container{max-width:1200px;margin:0 auto;padding:0 2rem 5rem;}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem;}
+    .card{background:var(--card);border:1px solid rgba(255,215,0,.12);border-radius:4px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .3s;opacity:0;animation:cardIn .6s ease forwards;position:relative;}
+    .card:nth-child(1){animation-delay:.05s;}.card:nth-child(2){animation-delay:.15s;}.card:nth-child(3){animation-delay:.25s;}
+    .card:nth-child(4){animation-delay:.35s;}.card:nth-child(5){animation-delay:.45s;}.card:nth-child(6){animation-delay:.55s;}
+    .card:nth-child(7){animation-delay:.65s;}.card:nth-child(8){animation-delay:.75s;}
+    .card:hover{transform:translateY(-9px);box-shadow:0 22px 50px rgba(75,0,130,.4),0 0 0 1px var(--accent);border-color:var(--accent);}
+    /* Shimmer */
+    .card::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,215,0,.1),transparent);pointer-events:none;z-index:2;}
+    .card:hover::before{animation:shine .65s ease forwards;}
+    /* Side bar */
+    .card::after{content:'';position:absolute;left:0;top:0;width:3px;height:0;background:linear-gradient(180deg,var(--accent),var(--primary));transition:height .4s ease;z-index:3;}
+    .card:hover::after{height:100%;}
+    .card img{width:100%;height:200px;object-fit:cover;transition:transform .5s,filter .4s;}
+    .card:hover img{transform:scale(1.08);filter:brightness(1.1) saturate(1.15);}
+    .type-badge{position:absolute;top:.8rem;right:.8rem;background:var(--accent);color:var(--bg);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1.5px;padding:.3rem .7rem;border-radius:2px;z-index:4;}
+    .card-body{padding:1.3rem;}
+    .card-body h2{font-family:'Cinzel',serif;color:var(--accent);font-size:1.15rem;letter-spacing:1px;margin-bottom:.5rem;transition:letter-spacing .3s;}
+    .card:hover .card-body h2{letter-spacing:1.5px;}
+    .card-body p{color:rgba(255,249,240,.7);font-size:1rem;line-height:1.55;font-style:italic;}
+    /* FOOTER */
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--accent);padding:2.5rem 3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--accent);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--accent);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--accent);color:var(--bg);border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    #st:hover{background:var(--white);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes cardIn{from{opacity:0;transform:translateY(35px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes shine{0%{left:-100%;}100%{left:150%;}}
+    @media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.page-hero h1{font-size:2.2rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <h1>Car <em>Types</em></h1>
+  <p>Every class, every throne — the full royal court of automobiles.</p>
+  <div class="gold-bar"></div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+  <button class="filter-btn" onclick="filterCards('sedan',this)">Sedan</button>
+  <button class="filter-btn" onclick="filterCards('suv',this)">SUV</button>
+  <button class="filter-btn" onclick="filterCards('sports',this)">Sports</button>
+  <button class="filter-btn" onclick="filterCards('muscle',this)">Muscle</button>
+</div>
+
+<div class="container">
+  <div class="cards-grid" id="types-list"></div>
+</div>
+
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const carTypes=[
+  {type:'Sedan',tag:'sedan',desc:'A sedan is designed primarily for comfort and practicality with four doors and a separate trunk. Example: Honda City, Toyota Camry.',img:'https://s1.cdn.autoevolution.com/images/news/rendering-artist-shows-audi-sport-what-an-rs-6-sedan-should-look-like-217404_1.jpg'},
+  {type:'SUV',tag:'suv',desc:'An SUV combines passenger comfort with off-road strength. Higher ground clearance, spacious interior, powerful engines. Example: BMW X Series, Kia Seltos.',img:'https://i.ytimg.com/vi/ueMrKvE-2dY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCXpY05HPg3hXIlysG28suc46CTaA'},
+  {type:'Coupe',tag:'sports',desc:'A Coupé has a sporty design with two doors and a fixed sloping roof giving a sleek aerodynamic appearance. Example: Porsche 911, Audi A4.',img:'https://newsroom.porsche.com/.imaging/mte/porsche-templating-theme/image_1080x624/dam/pnr/2024/Products/992-II/0840_nevada_coupe_u-crane_AKOS0607_edit_V03-sky.jpg/jcr:content/0840_nevada_coupe_u-crane_AKOS0607_edit_V03-sky.jpg'},
+  {type:'Hatchback',tag:'sedan',desc:'A hatchback has a rear door that opens upward into the cargo area. Compact, fuel-efficient, perfect for cities. Example: VW Polo, Ford Focus, Hyundai i20.',img:'https://static0.carbuzzimages.com/wordpress/wp-content/uploads/gallery-images/original/813000/300/813387.jpg?q=50&fit=crop&w=360&h=202&dpr=2'},
+  {type:'Pickup Truck',tag:'suv',desc:'A pickup truck is a powerful vehicle for heavy goods and materials. Strong engine and large cargo bed. Example: Ford Ranger, Toyota Hilux.',img:'https://static.overfuel.com/dealers/trust-auto/image/Pickup-Truck-Hennessey-Mammoth-1024x576.jpg'},
+  {type:'Convertible',tag:'sports',desc:'A convertible has a retractable roof for open-air driving — either soft fabric or hard retractable. Example: Mini Cooper, BMW Z4.',img:'https://auto.hindustantimes.com/htmobile1/mercedesbenz_cle-cabriolet/images/exterior_mercedesbenz-cle-cabriolet_front-left-side_600x400.jpg?imwidth=640'},
+  {type:'Muscle Car',tag:'muscle',desc:'An American-made two-door vehicle with a powerful V8 engine, aggressive design and strong straight-line performance. Iconic from the 1960s–70s.',img:'https://www.aecsolutions.com/wp-content/uploads/2024/05/2023-dodge-challenger-black-ghost-64a863fae3f70-1-1024x512.jpg'},
+  {type:'Sports Car',tag:'sports',desc:'Designed for high speed, quick acceleration and sporty performance with powerful engines and aerodynamic design. Example: Nissan GT-R.',img:'https://tekniikanmaailma.fi/wp-content/uploads/2021/08/0809-nissan-gt-r-nismo-1.jpg'},
+];
+
+const container=document.getElementById('types-list');
+carTypes.forEach(ct=>{
+  const d=document.createElement('div');
+  d.className='card'; d.dataset.tag=ct.tag;
+  d.innerHTML=`<span class="type-badge">${ct.tag.toUpperCase()}</span><img src="${ct.img}" alt="${ct.type}"><div class="card-body"><h2>${ct.type}</h2><p>${ct.desc}</p></div>`;
+  container.appendChild(d);
+});
+
+function filterCards(tag,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display=(tag==='all'||c.dataset.tag===tag)?'':'none';
+  });
+}
+window.addEventListener('scroll',()=>document.getElementById('st').classList.toggle('show',window.scrollY>300));
+
+// Scroll observe
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';obs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.card').forEach(c=>{c.style.opacity='0';c.style.transform='translateY(30px)';c.style.transition='opacity .6s,transform .6s';obs.observe(c);});
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — Upcoming Models</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#6D0F6D;--secondary:#2A0030;--accent:#F0A500;--bg:#0C000F;--white:#FFF5FF;--gray:#7A5A7A;--card:#150018;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(12,0,15,.97);border-bottom:1px solid var(--accent);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--accent);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+    .nav-links a:hover{color:var(--accent);}.nav-links a:hover::after{width:100%;}
+    .page-hero{background:linear-gradient(135deg,var(--primary),var(--secondary));border-bottom:2px solid var(--accent);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'🔮';position:absolute;font-size:15rem;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.05;pointer-events:none;}
+    .page-hero h1{font-family:'Cinzel',serif;font-size:3.5rem;font-weight:900;letter-spacing:5px;animation:fadeUp .8s ease both;}
+    .page-hero h1 em{color:var(--accent);font-style:normal;}
+    .page-hero p{font-style:italic;color:rgba(255,245,255,.6);margin-top:.8rem;font-size:1.15rem;animation:fadeUp .8s .2s ease both;}
+    .gold-bar{width:55px;height:2px;background:var(--accent);margin:.8rem auto 0;}
+    .section{max-width:1200px;margin:0 auto;padding:4rem 2rem 5rem;}
+    .s-label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;}
+    .s-title{font-family:'Cinzel',serif;font-size:2.3rem;margin:.3rem 0 .6rem;}
+    .s-title em{color:var(--accent);font-style:normal;}
+    .s-bar{width:55px;height:2px;background:var(--accent);margin:0 0 2.5rem;}
+    /* TIMELINE CARDS */
+    .timeline{display:flex;flex-direction:column;gap:2rem;position:relative;}
+    .timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--primary));opacity:.4;}
+    .tl-card{display:flex;gap:2rem;align-items:flex-start;background:var(--card);border:1px solid rgba(240,165,0,.12);border-radius:4px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .3s;position:relative;}
+    .tl-card:hover{transform:translateX(8px);box-shadow:0 10px 40px rgba(109,15,109,.4),0 0 0 1px var(--accent);border-color:var(--accent);}
+    .tl-dot{position:absolute;left:-38px;top:1.5rem;width:16px;height:16px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);z-index:2;flex-shrink:0;}
+    .tl-card img{width:280px;min-width:280px;height:190px;object-fit:cover;transition:transform .5s;}
+    .tl-card:hover img{transform:scale(1.05);}
+    .tl-body{padding:1.5rem 1.5rem 1.5rem 0;}
+    .release-tag{display:inline-block;background:rgba(240,165,0,.15);border:1px solid var(--accent);color:var(--accent);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;padding:.25rem .7rem;border-radius:2px;margin-bottom:.7rem;}
+    .tl-body h2{font-family:'Cinzel',serif;color:var(--white);font-size:1.4rem;margin-bottom:.5rem;letter-spacing:1px;}
+    .tl-body p{color:rgba(255,245,255,.65);font-style:italic;font-size:1.05rem;line-height:1.55;}
+    .specs-mini{display:flex;gap:1.5rem;margin-top:1rem;flex-wrap:wrap;}
+    .spec{text-align:center;}
+    .spec-val{font-family:'Cinzel',serif;color:var(--accent);font-size:1.1rem;font-weight:700;}
+    .spec-key{font-size:.8rem;color:var(--gray);font-style:italic;}
+    /* GRID for smaller cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.8rem;}
+    .card{background:var(--card);border:1px solid rgba(240,165,0,.12);border-radius:4px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .3s;position:relative;}
+    .card:hover{transform:translateY(-9px);box-shadow:0 22px 50px rgba(109,15,109,.4),0 0 0 1px var(--accent);border-color:var(--accent);}
+    .card img{width:100%;height:200px;object-fit:cover;transition:transform .5s;}
+    .card:hover img{transform:scale(1.08);}
+    .card-body{padding:1.2rem;}
+    .card-body h2{font-family:'Cinzel',serif;color:var(--accent);font-size:1rem;letter-spacing:1px;margin-bottom:.4rem;}
+    .card-body p{color:rgba(255,245,255,.65);font-size:1rem;font-style:italic;line-height:1.5;}
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--accent);padding:2.5rem 3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--accent);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--accent);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--accent);color:var(--bg);border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.page-hero h1{font-size:2.2rem;}.tl-card{flex-direction:column;}.tl-card img{width:100%;min-width:unset;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <h1>Upcoming <em>Models</em></h1>
+  <p>The future throne — cars that haven't yet touched the road.</p>
+  <div class="gold-bar"></div>
+</div>
+<div class="section">
+  <div class="s-label">— On the Horizon —</div>
+  <div class="s-title">Most <em>Anticipated</em></div>
+  <div class="s-bar"></div>
+  <div class="timeline" style="margin-left:2.5rem;">
+    <div class="tl-card">
+      <img src="https://hips.hearstapps.com/hmg-prod/images/2025-chevrolet-corvette-suv-102-6452e1aa3b345.jpg?crop=0.816xw:0.816xh;0.0867xw,0.0876xh&resize=1800:" alt="Chevy Corvette">
+      <div class="tl-body">
+        <span class="release-tag">Q1 2027</span>
+        <h2>Chevy Corvette SUV(2026)</h2>
+        <p>The Corvette subbrand is expanding and will soon grow to include—gasp!—a Corvette-badged performance SUV.</p>
+        <div class="specs-mini">
+          <div class="spec"><div class="spec-val">~400km</div><div class="spec-key">Range</div></div>
+          <div class="spec"><div class="spec-val">&lt;$60k</div><div class="spec-key">Price</div></div>
+          <div class="spec"><div class="spec-val">AWD</div><div class="spec-key">Drivetrain</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-card">
+      <img src="https://hips.hearstapps.com/hmg-prod/images/dodge-charger-hellcat-demon-cd-copy-6958194d2e13b.jpg?crop=1.00xw:0.838xh;0,0.0278xh" alt="Dodge Charger Hellcat V-8">
+      <div class="tl-body">
+        <span class="release-tag">Summer 2026</span>
+        <h2>Dodge charger Hellcat V-8</h2>
+        <p>The 2027 Dodge Charger Hellcat V8 is expected to continue the legendary American muscle-car tradition with extreme power and aggressive design. Here are the main details.</p>
+        <div class="specs-mini">
+          <div class="spec"><div class="spec-val">504km</div><div class="spec-key">Range</div></div>
+          <div class="spec"><div class="spec-val">$80k</div><div class="spec-key">Price</div></div>
+          <div class="spec"><div class="spec-val">800 hp</div><div class="spec-key">Power</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-card">
+      <img src="https://cdn.motor1.com/images/mgl/Qeb9NY/s1/2026-ford-mustang-dark-horse-sc-front-3-4.jpg" alt="2026 Ford Mustang Dark Horse SC">
+      <div class="tl-body">
+        <span class="release-tag">Fall 2026</span>
+        <h2>2026 Ford Mustang Dark Horse SC</h2>
+        <p>The 2026 Ford Mustang Dark Horse SC is a supercharged high-performance Mustang that replaces the old Shelby GT500 in the lineup. It uses a powerful V8 engine and is designed mainly for track performance.</p>
+        <div class="specs-mini">
+          <div class="spec"><div class="spec-val">~500km</div><div class="spec-key">Range</div></div>
+          <div class="spec"><div class="spec-val">$100k</div><div class="spec-key">price</div></div>
+          <div class="spec"><div class="spec-val">700+</div><div class="spec-key">Power</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" style="padding-top:0">
+  <div class="s-label">— Also Coming —</div>
+  <div class="s-title">More <em>Reveals</em></div>
+  <div class="s-bar"></div>
+  <div class="grid" id="upcoming-list"></div>
+</div>
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const more=[
+  {name:'Alfa Romeo Stelvio',img:'https://cdni.autocarindia.com/ExtraImages/20161116062907_Alfa-Romeo-Stelvio-1.jpg',desc:'The Alfa Romeo Stelvio is being thoroughly rethought for its second generation, which was supposed to arrive in 2026 but has now been delayed until 2027 at the earliest. '},
+  {name:'BMW 3-Series and M3 2026',img:'https://hips.hearstapps.com/hmg-prod/images/bmw-im3-neue-klasse-frontquarter-copy-6787fbd315a2f.jpg?crop=0.927xw:0.773xh;0.0731xw,0.0650xh',desc:'the next version of BMW venerable 3-series sports sedan is expected to include both internal-combustion and battery-electric variants'},
+  {name:'Kia EV5',img:'https://images.unsplash.com/photo-1551830820-330a71b99659?auto=format&fit=crop&w=800&q=80',desc:'Expected 2026. An affordable family electric SUV with futuristic design and V2L capabilities.'},
+];
+const c=document.getElementById('upcoming-list');
+more.forEach(m=>{
+  c.innerHTML+=`<div class="card"><img src="${m.img}" alt="${m.name}"><div class="card-body"><h2>${m.name}</h2><p>${m.desc}</p></div></div>`;
+});
+window.addEventListener('scroll',()=>document.getElementById('st').classList.toggle('show',window.scrollY>300));
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='none';obs.unobserve(x.target);}});},{threshold:.1});
+[...document.querySelectorAll('.card'),...document.querySelectorAll('.tl-card')].forEach(c=>{c.style.opacity='0';c.style.transition='opacity .6s,transform .5s';obs.observe(c);});
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#5C0000;--secondary:#1a0000;--accent:#E8E0D0;--gold:#C8A951;--bg:#080303;--white:#FFF0F0;--gray:#8a6060;--card:#110505;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(8,3,3,.97);border-bottom:1px solid var(--gold);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--gold);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .3s;}
+    .nav-links a:hover{color:var(--gold);}.nav-links a:hover::after{width:100%;}
+    .page-hero{background:linear-gradient(135deg,var(--primary),var(--secondary));border-bottom:2px solid var(--gold);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'◈';position:absolute;font-size:18rem;color:rgba(200,169,81,.04);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+    .page-hero h1{font-family:'Cinzel',serif;font-size:3.5rem;font-weight:900;letter-spacing:5px;animation:fadeUp .8s ease both;}
+    .page-hero h1 em{color:var(--gold);font-style:normal;}
+    .page-hero p{font-style:italic;color:rgba(255,240,240,.6);margin-top:.8rem;font-size:1.15rem;animation:fadeUp .8s .2s ease both;}
+    .gold-bar{width:55px;height:2px;background:var(--gold);margin:.8rem auto 0;}
+    /* FILTER */
+    .filter-bar{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;padding:2.5rem 2rem;}
+    .filter-btn{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;padding:.55rem 1.5rem;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;border-radius:2px;transition:all .3s;}
+    .filter-btn.active,.filter-btn:hover{background:var(--gold);color:var(--bg);}
+    /* MASONRY */
+    .gallery-grid{columns:3 300px;column-gap:1.2rem;padding:0 2rem 4rem;max-width:1400px;margin:0 auto;}
+    .gallery-item{break-inside:avoid;margin-bottom:1.2rem;position:relative;overflow:hidden;border-radius:3px;cursor:pointer;border:1px solid rgba(200,169,81,.1);transition:border-color .3s;}
+    .gallery-item:hover{border-color:var(--gold);}
+    .gallery-item img{width:100%;display:block;transition:transform .5s,filter .4s;}
+    .gallery-item:hover img{transform:scale(1.06);filter:brightness(1.1) saturate(1.15);}
+    .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,0,0,.85) 0%,transparent 55%);opacity:0;transition:opacity .35s;display:flex;align-items:flex-end;padding:1.2rem;}
+    .gallery-item:hover .gallery-overlay{opacity:1;}
+    .overlay-text h3{font-family:'Cinzel',serif;color:var(--gold);font-size:1rem;letter-spacing:1px;margin-bottom:.2rem;}
+    .overlay-text p{font-size:.9rem;color:rgba(255,240,240,.75);font-style:italic;}
+    /* LIGHTBOX */
+    #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;align-items:center;justify-content:center;flex-direction:column;animation:fadeIn .3s ease;}
+    #lightbox.open{display:flex;}
+    #lightbox img{max-width:90vw;max-height:80vh;object-fit:contain;border:1px solid var(--gold);border-radius:3px;}
+    #lightbox-caption{font-family:'Cinzel',serif;color:var(--gold);letter-spacing:2px;margin-top:1rem;font-size:.9rem;}
+    #lightbox-close{position:absolute;top:2rem;right:2rem;color:var(--gold);font-size:2rem;cursor:pointer;background:none;border:none;transition:transform .2s;}
+    #lightbox-close:hover{transform:rotate(90deg);}
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--gold);padding:2.5rem 3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--gold);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--gold);color:var(--bg);border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.page-hero h1{font-size:2.2rem;}.gallery-grid{columns:1 280px;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <h1>Royal <em>Gallery</em></h1>
+  <p>A curated exhibition of the world's most magnificent automobiles.</p>
+  <div class="gold-bar"></div>
+</div>
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterGallery('all',this)">All</button>
+  <button class="filter-btn" onclick="filterGallery('sports',this)">Sports</button>
+  <button class="filter-btn" onclick="filterGallery('suv',this)">SUV</button>
+  <button class="filter-btn" onclick="filterGallery('classic',this)">Classic</button>
+  <button class="filter-btn" onclick="filterGallery('electric',this)">Electric</button>
+</div>
+<div class="gallery-grid" id="gallery"></div>
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt=""/>
+  <div id="lightbox-caption"></div>
+</div>
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const images=[
+  {src:'https://www.topgear.com/sites/default/files/cars-car/image/2024/02/pcgb20_0589_fine.jpg',title:'Porsche 911',cat:'sports'},
+  {src:'https://wallpapers.com/images/featured/nissan-gt-r-4k-dy960e9hbyidd1ln.jpg',title:'Nissan GTR',cat:'sports '},
+  {src:'https://www.aronline.co.uk/wp-content/uploads/2022/04/Range-Rover-05-1200x800.jpeg',title:'Range Rover',cat:'suv'},
+  {src:'https://www.lux-mag.com/wp-content/uploads/2023/08/Ferrari-Roma-NI-Drive-%E2%94%AC%C2%AE-Photo-Max-Earey-055.jpg',title:'Ferrari Roma',cat:'classic'},
+  {src:'https://www.carandbike.com/_next/image?url=https%3A%2F%2Fimages.carandbike.com%2Fcms%2Farticles%2F2023%2F5%2F3207416%2F562fe1e2_86a2_4031_a307_3c7442ac2bff_435dddca3d.jpeg&w=1920&q=90',title:'Ford Raptor',cat:'suv'},
+  {src:'https://binaries.pirelli.com/2022/11/17/095616603-42261dd8-9806-4d22-8ad9-2514bd065390.jpg',title:'Classic Jaguar',cat:'classic'},
+  {src:'https://acko-cms.ackoassets.com/652854_8e9bf4d3b6.jpeg',title:'Lamborghini Huracan',cat:'sports'},
+  {src:'https://wallpaper.forfun.com/fetch/aa/aae0b5e796321474dbe7cb2aa5f23edb.jpeg',title:'Nissan GTR',cat:'sports'},
+  {src:'https://wallpapers.com/images/hd/sunrise-with-blue-bugatti-veyron-4vje7wjrnmal4acw.jpg',title:'Bugatti Chiron',cat:'sports'},
+  {src:'https://wallpaper.forfun.com/fetch/87/8709b657cc9c14f416c3669303d7e41e.jpeg',title:'Mclaren P1',cat:'sports'},
+  {src:'https://wallpapercave.com/wp/wp12165465.jpg',title:'Koenigsegg Jesko',cat:'sports'},
+  {src:'https://images2.alphacoders.com/126/thumb-1920-1268772.jpg',title:'Aston Martin',cat:'classic'},
+  {src:'https://i.pinimg.com/736x/dc/33/30/dc333035890070e77335d94a4cff12c3.jpg',title:'Ferrari la Ferrari',cat:'sports'},
+  {src:'https://png.pngtree.com/thumb_back/fh260/background/20230518/pngtree-an-old-black-rolls-royce-is-parked-in-a-field-with-image_2581148.jpg',title:'Vintage Rolls Royce',cat:'classic'},
+  {src:'https://imgd-ct.aeplcdn.com/664x415/cw/ec/33171/BMW-M3-Exterior-119389.jpg?wm=0&q=80',title:'BMW M3',cat:'classic'},
+  {src:'https://www.jeep-india.com/content/dam/cross-regional/apac/jeep/en_in/wrangler-price-reveal/2880X1400-Banner-2.jpg.img.1440.jpg',title:'Jeep Wrangler',cat:'suv'},
+
+];
+const grid=document.getElementById('gallery');
+function renderGallery(filter){
+  grid.innerHTML='';
+  images.filter(i=>filter==='all'||i.cat===filter).forEach((img,idx)=>{
+    const d=document.createElement('div');
+    d.className='gallery-item'; d.dataset.cat=img.cat;
+    d.style.opacity='0'; d.style.transition=`opacity .5s ${idx*.05}s`;
+    d.innerHTML=`<img src="${img.src}" alt="${img.title}" loading="lazy"><div class="gallery-overlay"><div class="overlay-text"><h3>${img.title}</h3><p>${img.cat.charAt(0).toUpperCase()+img.cat.slice(1)}</p></div></div>`;
+    d.onclick=()=>openLightbox(img.src,img.title);
+    grid.appendChild(d);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>d.style.opacity='1'));
+  });
+}
+function filterGallery(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderGallery(cat);
+}
+function openLightbox(src,title){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lightbox-caption').textContent=title;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});
+renderGallery('all');
+window.addEventListener('scroll',()=>document.getElementById('st').classList.toggle('show',window.scrollY>300));
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — Compare Cars</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#7b00ff;--secondary:#101820;--accent:#ff2d55;--gold:#f5c518;--bg:#0b0b0b;--white:#ffffff;--gray:#555;--card:#141414;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(11,11,11,.97);border-bottom:1px solid var(--gold);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--gold);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .3s;}
+    .nav-links a:hover{color:var(--gold);}.nav-links a:hover::after{width:100%;}
+    .page-hero{background:linear-gradient(135deg,var(--secondary),#060c14);border-bottom:2px solid var(--gold);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'⚖';position:absolute;font-size:16rem;color:rgba(245,197,24,.04);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+    .page-hero h1{font-family:'Cinzel',serif;font-size:3.5rem;font-weight:900;letter-spacing:5px;animation:fadeUp .8s ease both;}
+    .page-hero h1 em{color:var(--gold);font-style:normal;}
+    .page-hero p{font-style:italic;color:rgba(255,255,255,.6);margin-top:.8rem;font-size:1.15rem;animation:fadeUp .8s .2s ease both;}
+    .gold-bar{width:55px;height:2px;background:var(--gold);margin:.8rem auto 0;}
+    /* SELECTOR */
+    .selector-section{max-width:900px;margin:3rem auto;padding:0 2rem;}
+    .selector-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:center;}
+    .vs{font-family:'Cinzel',serif;font-size:2rem;color:var(--accent);text-align:center;font-weight:900;}
+    .car-select{width:100%;}
+    .car-select label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:3px;color:var(--gold);display:block;margin-bottom:.5rem;}
+    .car-select select{width:100%;padding:.9rem 1.2rem;background:var(--card);border:1px solid rgba(245,197,24,.3);color:var(--white);font-family:'Crimson Text',serif;font-size:1.05rem;border-radius:3px;cursor:pointer;transition:border-color .3s;}
+    .car-select select:focus{outline:none;border-color:var(--gold);}
+    .compare-btn{display:block;margin:2rem auto 0;padding:.9rem 3rem;background:var(--gold);color:#0b0b0b;font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:2px;border:none;border-radius:3px;cursor:pointer;transition:all .3s;font-weight:700;}
+    .compare-btn:hover{background:var(--white);transform:translateY(-3px);box-shadow:0 8px 25px rgba(245,197,24,.3);}
+    /* COMPARISON TABLE */
+    .result{max-width:1000px;margin:0 auto 5rem;padding:0 2rem;display:none;}
+    .result.show{display:block;animation:fadeUp .6s ease both;}
+    .cars-header{display:grid;grid-template-columns:220px 1fr 1fr;background:var(--card);border:1px solid rgba(245,197,24,.2);border-bottom:2px solid var(--gold);border-radius:3px 3px 0 0;}
+    .h-cell{padding:1.2rem;text-align:center;}
+    .h-cell.label{text-align:left;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:2px;color:var(--gold);}
+    .car-hdr img{width:100%;height:130px;object-fit:cover;border-radius:3px;margin-bottom:.5rem;filter:brightness(.9);}
+    .car-hdr h3{font-family:'Cinzel',serif;color:var(--gold);font-size:1rem;letter-spacing:1px;}
+    .spec-row{display:grid;grid-template-columns:220px 1fr 1fr;border:1px solid rgba(245,197,24,.08);border-top:none;transition:background .2s;}
+    .spec-row:hover{background:rgba(245,197,24,.04);}
+    .spec-row:last-child{border-radius:0 0 3px 3px;}
+    .s-label{padding:1rem 1.2rem;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;border-right:1px solid rgba(245,197,24,.08);}
+    .s-val{padding:1rem 1.2rem;text-align:center;font-size:1.05rem;color:var(--white);font-style:italic;border-right:1px solid rgba(245,197,24,.08);}
+    .s-val:last-child{border-right:none;}
+    .s-val.winner{color:var(--gold);font-style:normal;font-weight:600;}
+    .winner-badge{display:inline-block;background:var(--gold);color:#0b0b0b;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:1px;padding:.15rem .4rem;border-radius:2px;margin-left:.5rem;vertical-align:middle;}
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--gold);padding:2.5rem 3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--gold);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--gold);color:var(--bg);border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.page-hero h1{font-size:2.2rem;}.selector-grid{grid-template-columns:1fr;}.vs{display:none;}.cars-header,.spec-row{grid-template-columns:130px 1fr 1fr;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <h1>Compare <em>Cars</em></h1>
+  <p>Choose any two vehicles and pit them against each other in the royal arena.</p>
+  <div class="gold-bar"></div>
+</div>
+<div class="selector-section">
+  <div class="selector-grid">
+    <div class="car-select"><label>— Car One —</label><select id="car1"></select></div>
+    <div class="vs">VS</div>
+    <div class="car-select"><label>— Car Two —</label><select id="car2"></select></div>
+  </div>
+  <button class="compare-btn" onclick="runCompare()">Compare Now</button>
+</div>
+<div class="result" id="result"></div>
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const cars=[
+  {name:'Porsche 911 GT3',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',type:'Sports',power:650,torque:600,speed:320,accel:3.6,price:'₹2.4 Cr',fuel:'Petrol',seats:2},
+  {name:'Nissan GTR R35',img:'https://images6.alphacoders.com/123/thumb-1920-1233784.jpg',type:'Sports',power:600,torque:652,speed:344,accel:2.7,price:'₹2.7 Cr',fuel:'Petrol',seats:4},
+  {name:'BMW M5 Competition',img:'https://wallpapercave.com/wp/wp15669740.jpg',type:'Sedan',power:625,torque:750,speed:305,accel:3.3,price:'₹1.6 Cr',fuel:'Petrol',seats:5},
+  {name:'Tesla Model S Plaid',img:'https://wallpapercat.com/w/full/7/c/2/9142-3840x2160-desktop-4k-tesla-model-s-wallpaper.jpg',type:'Electric',power:1020,torque:1420,speed:322,accel:2.1,price:'₹1.5 Cr',fuel:'Electric',seats:5},
+  {name:'Lamborghini Huracan',img:'https://wallpapercat.com/w/full/6/8/d/893581-3840x2160-desktop-4k-lamborghini-huracan-wallpaper-photo.jpg',type:'Sports',power:630,torque:600,speed:325,accel:3.2,price:'₹3.7 Cr',fuel:'Petrol',seats:2},
+  {name:'Range Rover Sport',img:'https://www.wsupercars.com/thumbnails-wide/Land-Rover/2023-Land-Rover-Range-Rover-Sport-001.jpg',type:'SUV',power:530,torque:750,speed:280,accel:4.3,price:'₹1.9 Cr',fuel:'Petrol',seats:5},
+  {name:'Porsche Taycan Turbo S',img:'https://www.stuttcars.com/wp-content/uploads/2021/05/2020_porsche_taycan_turbo_s_4k_4-HD-scaled.jpg',type:'Electric',power:761,torque:1050,speed:305,accel:2.8,price:'₹2.5 Cr',fuel:'Electric',seats:4},
+  {name:'Ford Mustang GT500',img:'https://4kwallpapers.com/images/wallpapers/ford-mustang-shelby-3840x2160-13036.jpg',type:'Muscle',power:760,torque:847,speed:290,accel:3.3,price:'₹90L',fuel:'Petrol',seats:4},
+  {name:'Audi R8 V10',img:'https://4kwallpapers.com/images/wallpapers/audi-r8-v10-coupe-3840x2160-13954.jpg',type:'Sports',power:620,torque:580,speed:330,accel:3.1,price:'₹2.8 Cr',fuel:'Petrol',seats:2},
+];
+const s1=document.getElementById('car1'),s2=document.getElementById('car2');
+cars.forEach((c,i)=>{
+  s1.innerHTML+=`<option value="${i}">${c.name}</option>`;
+  s2.innerHTML+=`<option value="${i}">${c.name}</option>`;
+});
+s2.value='1';
+function runCompare(){
+  const a=cars[+s1.value],b=cars[+s2.value];
+  const specs=[
+    {label:'Type',va:a.type,vb:b.type,higher:null},
+    {label:'Power (hp)',va:a.power,vb:b.power,higher:true},
+    {label:'Torque (Nm)',va:a.torque,vb:b.torque,higher:true},
+    {label:'Top Speed (km/h)',va:a.speed,vb:b.speed,higher:true},
+    {label:'0–100 km/h (s)',va:a.accel,vb:b.accel,higher:false},
+    {label:'Fuel',va:a.fuel,vb:b.fuel,higher:null},
+    {label:'Seats',va:a.seats,vb:b.seats,higher:null},
+    {label:'Price',va:a.price,vb:b.price,higher:null},
+  ];
+  let html=`<div class="cars-header">
+    <div class="h-cell label">Specification</div>
+    <div class="h-cell"><div class="car-hdr"><img src="${a.img}" alt="${a.name}"><h3>${a.name}</h3></div></div>
+    <div class="h-cell"><div class="car-hdr"><img src="${b.img}" alt="${b.name}"><h3>${b.name}</h3></div></div>
+  </div>`;
+  specs.forEach(s=>{
+    let wa=false,wb=false;
+    if(s.higher===true){wa=+s.va>+s.vb;wb=+s.vb>+s.va;}
+    if(s.higher===false){wa=+s.va<+s.vb;wb=+s.vb<+s.va;}
+    html+=`<div class="spec-row">
+      <div class="s-label">${s.label}</div>
+      <div class="s-val${wa?' winner':''}">  ${s.va}${wa?'<span class="winner-badge">BETTER</span>':''}</div>
+      <div class="s-val${wb?' winner':''}">  ${s.vb}${wb?'<span class="winner-badge">BETTER</span>':''}</div>
+    </div>`;
+  });
+  const r=document.getElementById('result');
+  r.innerHTML=html; r.classList.add('show');
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+}
+window.addEventListener('scroll',()=>document.getElementById('st').classList.toggle('show',window.scrollY>300));
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#7B0D1E;--secondary:#1C0A00;--accent:#D4AF37;--bg:#0D0D0D;--white:#FFF8E7;--gray:#8B7355;--card:#1a0808;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    /* NAV */
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(10,5,5,0.97);border-bottom:1px solid var(--accent);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);transition:padding .3s;}
+    nav.shrink{padding:.6rem 3rem;}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--accent);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+    .nav-links a:hover{color:var(--accent);}
+    .nav-links a:hover::after{width:100%;}
+    /* HERO */
+    .hero{min-height:94vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover;}
+    .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(123,13,30,.88),rgba(13,13,13,.92));}
+    .hero-inner{position:relative;z-index:2;animation:fadeUp .9s ease .2s both;}
+    .crown{font-size:3rem;display:block;margin-bottom:.5rem;animation:float 3s ease-in-out infinite;}
+    .hero h1{font-family:'Cinzel',serif;font-size:4.5rem;font-weight:900;letter-spacing:6px;line-height:1.1;margin:.4rem 0;}
+    .hero h1 em{color:var(--accent);font-style:normal;text-shadow:0 0 30px rgba(212,175,55,.5);}
+    .hero p{font-size:1.3rem;color:rgba(255,248,231,.8);max-width:580px;margin:1rem auto 2.5rem;font-style:italic;}
+    .btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .btn-g{background:var(--accent);color:#0D0D0D;padding:.8rem 2.5rem;border-radius:2px;font-family:'Cinzel',serif;font-weight:700;font-size:.85rem;letter-spacing:2px;text-decoration:none;transition:all .3s;box-shadow:0 0 20px rgba(212,175,55,.3);}
+    .btn-g:hover{background:var(--white);transform:translateY(-3px);}
+    .btn-o{border:1px solid var(--accent);color:var(--accent);padding:.8rem 2.5rem;border-radius:2px;font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:2px;text-decoration:none;transition:all .3s;}
+    .btn-o:hover{background:var(--accent);color:#0D0D0D;transform:translateY(-3px);}
+    /* STRIP */
+    .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));background:var(--primary);border-top:2px solid var(--accent);border-bottom:2px solid var(--accent);}
+    .strip-item{padding:1.8rem 1rem;text-align:center;border-right:1px solid rgba(212,175,55,.2);transition:background .3s;}
+    .strip-item:last-child{border-right:none;}
+    .strip-item:hover{background:rgba(212,175,55,.1);}
+    .strip-item .icon{font-size:1.8rem;margin-bottom:.4rem;}
+    .strip-item h3{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:2px;color:var(--accent);}
+    .strip-item p{font-size:.9rem;color:rgba(255,248,231,.65);font-style:italic;}
+    /* SECTION */
+    .section{padding:5rem 3rem;max-width:1200px;margin:0 auto;}
+    .s-label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;}
+    .s-title{font-family:'Cinzel',serif;font-size:2.4rem;margin:.3rem 0;color:var(--white);}
+    .s-title em{color:var(--accent);font-style:normal;}
+    .gold-bar{width:55px;height:2px;background:var(--accent);margin:1rem 0 2.5rem;}
+    /* CARDS */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem;}
+    .card{background:var(--card);border:1px solid rgba(212,175,55,.12);border-radius:3px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .3s;opacity:0;animation:cardIn .6s ease forwards;}
+    .card:nth-child(1){animation-delay:.1s;}.card:nth-child(2){animation-delay:.22s;}.card:nth-child(3){animation-delay:.34s;}
+    .card:hover{transform:translateY(-9px);box-shadow:0 22px 50px rgba(0,0,0,.55),0 0 0 1px var(--accent);border-color:var(--accent);}
+    .card img{width:100%;height:195px;object-fit:cover;transition:transform .5s,filter .4s;}
+    .card:hover img{transform:scale(1.08);filter:brightness(1.1);}
+    .card-body{padding:1.2rem;}
+    .card-body h3{font-family:'Cinzel',serif;color:var(--accent);font-size:1rem;letter-spacing:1px;margin-bottom:.5rem;}
+    .card-body p{color:rgba(255,248,231,.7);font-style:italic;font-size:1rem;line-height:1.5;}
+    .card-link{display:inline-block;margin-top:.7rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:2px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s;}
+    .card-link:hover{border-color:var(--accent);}
+    /* QUOTE */
+    .quote{background:linear-gradient(135deg,var(--primary),var(--secondary));border-top:1px solid var(--accent);border-bottom:1px solid var(--accent);padding:4rem 3rem;text-align:center;}
+    .quote blockquote{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--accent);letter-spacing:1px;max-width:800px;margin:0 auto;}
+    .quote cite{display:block;margin-top:1rem;font-style:italic;color:rgba(255,248,231,.55);font-size:1rem;}
+    /* FOOTER */
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--accent);padding:3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--accent);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--accent);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    /* SCROLL TOP */
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--accent);color:#0D0D0D;border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    #st:hover{background:var(--white);}
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+    @keyframes cardIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){.hero h1{font-size:2.5rem;}nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.section{padding:3rem 1.2rem;}}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="crown">♛</span>
+    <h1>THE ROYAL<br><em>AUTOMOBILE</em></h1>
+    <p>Where every engine roars with the power of kings and every curve is sculpted by destiny.</p>
+    <div class="btns">
+      <a href="types.html" class="btn-g">Explore Types</a>
+      <a href="gallery.html" class="btn-o">View Gallery</a>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-item"><div class="icon">🏆</div><h3>8 Car Types</h3><p>Every class covered</p></div>
+  <div class="strip-item"><div class="icon">⚡</div><h3>Electric Future</h3><p>EV pioneers</p></div>
+  <div class="strip-item"><div class="icon">🔮</div><h3>Upcoming Models</h3><p>Next-gen reveals</p></div>
+  <div class="strip-item"><div class="icon">🏛️</div><h3>Rich History</h3><p>Century of legends</p></div>
+  <div class="strip-item"><div class="icon">⚖️</div><h3>Compare Cars</h3><p>Side by side</p></div>
+</div>
+
+<div class="section">
+  <div class="s-label">— Featured —</div>
+  <div class="s-title">Explore Our <em>Kingdom</em></div>
+  <div class="gold-bar"></div>
+  <div class="grid">
+    <div class="card"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Types"><div class="card-body"><h3>Car Types</h3><p>From sedans to muscle cars — every royal class awaits.</p><a href="types.html" class="card-link">Explore →</a></div></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=800&q=80" alt="Brands"><div class="card-body"><h3>Great Brands</h3><p>The legendary houses that shaped automotive history.</p><a href="brands.html" class="card-link">Discover →</a></div></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80" alt="Electric"><div class="card-body"><h3>Electric Era</h3><p>The silent revolution — power without compromise.</p><a href="electric.html" class="card-link">Enter →</a></div></div>
+  </div>
+</div>
+
+<div class="quote">
+  <blockquote>"Automobiles are not just machines — they are the thrones of the modern age."</blockquote>
+  <cite>— AutoRoyal</cite>
+</div>
+
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('st').classList.toggle('show',window.scrollY>300);
+    document.getElementById('navbar').classList.toggle('shrink',window.scrollY>60);
+  });
+</script>
+</body>
+</html>

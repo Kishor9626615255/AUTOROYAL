@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AutoRoyal — History</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#1A1A1A;--secondary:#2C2C2C;--accent:#C8A951;--bg:#0A0A0A;--white:#F5F0E8;--gray:#6E6E6E;--card:#141414;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(10,10,10,.97);border-bottom:1px solid var(--accent);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+    .logo{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;color:var(--accent);letter-spacing:4px;}
+    .logo span{color:var(--white);}
+    .nav-links{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--white);transition:color .3s;position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+    .nav-links a:hover{color:var(--accent);}.nav-links a:hover::after{width:100%;}
+    .page-hero{background:linear-gradient(to right,rgba(10,10,10,.98),rgba(20,20,20,.9)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover;border-bottom:2px solid var(--accent);padding:6rem 4rem;position:relative;overflow:hidden;}
+    .page-hero::before{content:'1885';position:absolute;right:4rem;top:50%;transform:translateY(-50%);font-family:'Cinzel',serif;font-size:12rem;color:rgba(200,169,81,.04);font-weight:900;pointer-events:none;}
+    .page-hero h1{font-family:'Cinzel',serif;font-size:3.8rem;font-weight:900;letter-spacing:5px;animation:fadeUp .8s ease both;}
+    .page-hero h1 em{color:var(--accent);font-style:normal;}
+    .page-hero p{font-style:italic;color:rgba(245,240,232,.6);margin-top:.8rem;font-size:1.2rem;max-width:600px;animation:fadeUp .8s .2s ease both;}
+    .gold-bar{width:55px;height:2px;background:var(--accent);margin:.8rem 0 0;}
+    /* TIMELINE */
+    .section{max-width:1100px;margin:0 auto;padding:5rem 2rem;}
+    .era-label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:.5rem;}
+    .era-title{font-family:'Cinzel',serif;font-size:2.3rem;margin-bottom:.6rem;}
+    .era-title em{color:var(--accent);font-style:normal;}
+    .era-bar{width:55px;height:2px;background:var(--accent);margin:0 0 3rem;}
+    .timeline{position:relative;padding-left:3rem;}
+    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),rgba(200,169,81,.1));}
+    .era{position:relative;margin-bottom:4rem;opacity:0;transform:translateX(-20px);transition:opacity .7s,transform .7s;}
+    .era.visible{opacity:1;transform:translateX(0);}
+    .era-dot{position:absolute;left:-3.45rem;top:.3rem;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px rgba(200,169,81,.5);}
+    .era-year{font-family:'Cinzel',serif;font-size:1rem;color:var(--accent);letter-spacing:3px;margin-bottom:.4rem;}
+    .era h2{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--white);margin-bottom:.8rem;}
+    .era-img{width:100%;max-height:280px;object-fit:cover;border-radius:3px;border:1px solid rgba(200,169,81,.2);margin-bottom:1rem;filter:sepia(.2);}
+    .era p{color:rgba(245,240,232,.7);font-style:italic;font-size:1.05rem;line-height:1.65;}
+    .era-fact{display:inline-block;margin-top:.8rem;background:rgba(200,169,81,.1);border-left:2px solid var(--accent);padding:.5rem 1rem;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:1.5px;color:var(--accent);}
+    footer{background:rgba(0,0,0,.97);border-top:1px solid var(--accent);padding:2.5rem 3rem;text-align:center;}
+    .f-logo{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--accent);letter-spacing:4px;margin-bottom:1rem;}
+    .f-links{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .f-links a{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--accent);}
+    .f-copy{font-size:.9rem;color:var(--gray);font-style:italic;}
+    #st{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--accent);color:var(--bg);border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;opacity:0;transform:translateY(20px);transition:all .35s;z-index:999;}
+    #st.show{opacity:1;transform:translateY(0);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{gap:1rem;}.page-hero{padding:4rem 1.5rem;}.page-hero h1{font-size:2.3rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">AUTO<span>ROYAL</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="types.html">Types</a></li>
+    <li><a href="brands.html">Brands</a></li><li><a href="upcoming.html">Upcoming</a></li>
+    <li><a href="electric.html">Electric</a></li><li><a href="history.html">History</a></li>
+    <li><a href="gallery.html">Gallery</a></li><li><a href="compare.html">Compare</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <h1>The <em>History</em><br>of Automobiles</h1>
+  <p>From a horseless carriage in 1885 to a 1,000-horsepower electric throne — the greatest mechanical journey ever told.</p>
+  <div class="gold-bar"></div>
+</div>
+<div class="section">
+  <div class="era-label">— Through the Ages —</div>
+  <div class="era-title">A Century of <em>Legends</em></div>
+  <div class="era-bar"></div>
+  <div class="timeline">
+    <div class="era"><div class="era-dot"></div><div class="era-year">1885</div><h2>The Birth of the Automobile</h2><img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80" alt="Early car" class="era-img"><p>Karl Benz patented the Benz Patent-Motorwagen in 1885 — widely regarded as the world's first true automobile powered by a gasoline engine. Running on three wheels with a 0.75 hp engine, it reached a top speed of 16 km/h. The age of the automobile had begun.</p><span class="era-fact">⚙ First gasoline-powered automobile — 0.75 hp, 16 km/h</span></div>
+    <div class="era"><div class="era-dot"></div><div class="era-year">1908</div><h2>The Model T & Mass Production</h2><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Ford Model T" class="era-img"><p>Henry Ford introduced the Model T in 1908 and revolutionised the world with the moving assembly line in 1913. What once took 12 hours to build now took 93 minutes. Cars transitioned from luxury items to everyday transport, forever changing civilisation.</p><span class="era-fact">🏭 15 million Model T's built — $850 original price</span></div>
+    <div class="era"><div class="era-dot"></div><div class="era-year">1960s</div><h2>The Golden Age of Muscle & Speed</h2><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=800&q=80" alt="Muscle cars" class="era-img"><p>The 1960s roared with the most iconic cars ever made. Ford Mustang, Chevrolet Camaro, Dodge Charger — American muscle defined an era. Across the Atlantic, Ferrari and Lamborghini waged war at Le Mans and on the road. Horsepower became the currency of cool.</p><span class="era-fact">🏁 Ford GT40 won Le Mans 4 consecutive years (1966–1969)</span></div>
+    <div class="era"><div class="era-dot"></div><div class="era-year">1997</div><h2>The Hybrid Revolution Begins</h2><img src="https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=800&q=80" alt="Hybrid" class="era-img"><p>Toyota launched the Prius in Japan in 1997 — the world's first mass-produced hybrid vehicle. Combining a petrol engine with an electric motor, it sparked the green revolution in motoring. By 2023, over 20 million Prius units had been sold worldwide.</p><span class="era-fact">🌿 20M+ Prius units sold globally by 2023</span></div>
+    <div class="era"><div class="era-dot"></div><div class="era-year">2008</div><h2>Tesla & the Electric Age</h2><img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80" alt="Tesla" class="era-img"><p>Tesla's Roadster in 2008 proved electric cars could be fast, desirable, and practical. The Model S in 2012 shattered every preconception — luxury, range, performance. By 2024, Tesla became the world's most valuable car company, valued above Toyota, BMW and Mercedes combined.</p><span class="era-fact">⚡ Tesla Model S — first 400+ km range production EV</span></div>
+    <div class="era"><div class="era-dot"></div><div class="era-year">Today</div><h2>The Autonomous & Electric Future</h2><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" alt="Future" class="era-img"><p>Today's automobiles are rolling supercomputers — capable of driving themselves, updating over the air, and communicating with infrastructure. By 2030, analysts predict 50% of new car sales will be electric. The question is no longer whether cars will transform — but how fast.</p><span class="era-fact">🤖 40M+ EVs on global roads as of 2024</span></div>
+  </div>
+</div>
+<footer>
+  <div class="f-logo">♛ AUTOROYAL</div>
+  <div class="f-links">
+    <a href="index.html">Home</a><a href="types.html">Types</a><a href="brands.html">Brands</a>
+    <a href="upcoming.html">Upcoming</a><a href="electric.html">Electric</a>
+    <a href="history.html">History</a><a href="gallery.html">Gallery</a>
+    <a href="compare.html">Compare</a><a href="contact.html">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 AutoRoyal. Crafted for the discerning.</p>
+</footer>
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('st').classList.toggle('show',window.scrollY>300));
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}});},{threshold:.15});
+document.querySelectorAll('.era').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
